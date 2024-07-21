@@ -1,0 +1,28 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        // 여기에 코드를 작성해주세요.
+        Scanner input = new Scanner(System.in);
+
+        // 정수 N
+        int N = input.nextInt();
+        input.close();
+
+        int sum = sumNum(N);
+        System.out.println(sum);
+
+    }
+
+    private static int sumNum(int N)
+    {
+        int totalSum = 0;
+
+        for(int i = 1; i <= N; i++)
+        {
+            totalSum += i;
+        }
+
+        return totalSum / 10;
+    }
+}
