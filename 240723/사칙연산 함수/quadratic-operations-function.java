@@ -30,7 +30,7 @@ public class Main {
                 System.out.println(a + " / " + c + " = " + result);
                 break;
             default:
-                System.out.println("잘못 입력하였습니다.");
+                System.out.println("False");
         }
     }
 
