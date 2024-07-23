@@ -41,4 +41,5 @@ public class Main {
         }
         // 4로 나누어 떨어지지만, 예외적인 사항은 전부 확인했으므로 윤년
         return true;
+    }
 }
