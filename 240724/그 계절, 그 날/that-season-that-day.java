@@ -72,7 +72,7 @@ public class Main {
         switch (M)
         {
             case 3: case 4: case 5:
-                return "Spirng";
+                return "Spring";
             case 6: case 7: case 8:
                 return "Summer";
             case 9: case 10: case 11:
