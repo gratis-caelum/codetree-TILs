@@ -79,7 +79,7 @@ public class Main {
                 return "Fall";
             case 12: case 1: case 2:
                 return "Winter";
-            default: return ""; // 없는 경우
+            default: return "-1"; // 없는 경우
         }
     }
 }
