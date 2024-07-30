@@ -10,7 +10,7 @@ public class Main {
         int n = input.nextInt();
 
         // 2n개의 숫자 입력
-        int[] arr = new int[n];
+        int[] arr = new int[2 * n];
         for (int i = 0; i < 2 * n; i++)
         {
             arr[i] = input.nextInt();
