@@ -13,7 +13,7 @@ public class Main {
         String[] words = new String[n];
         for (int i = 0; i < n; i++)
         {
-            words[i] = input.nextLine();
+            words[i] = input.next();
         }
 
         // 오름차순 정렬
