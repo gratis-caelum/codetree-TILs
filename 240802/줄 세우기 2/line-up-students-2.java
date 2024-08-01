@@ -18,7 +18,7 @@ class Student implements Comparable<Student> {
         if (this.height != other.height) {
             return Integer.compare(this.height, other.height);
         } else {
-            return Integer.compare(other.height, this.height);
+            return Integer.compare(other.weight, this.weight);
         }
     }
 
