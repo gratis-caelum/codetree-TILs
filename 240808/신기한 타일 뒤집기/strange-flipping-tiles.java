@@ -37,7 +37,7 @@ public class Main {
 
         // 흰색, 검은색 타일 개수
         int b = 0, w = 0;
-        for (int i = 0; i < 2 * OFFSET; i++) {
+        for (int i = 0; i < 2 * MAX_R; i++) {
             if (arr[i] == 1) b++;
             else if (arr[i] == 2) w++;
         }
