@@ -15,7 +15,7 @@ public class Main {
         // 무한한 한 줄의 타일을 저장할 배열
         int[] arr = new int[2 * OFFSET + 1];
 
-        int cur = MAX_N; // 현재 위치
+        int cur = OFFSET; // 현재 위치
 
         for (int i = 0; i < n; i++) {
             int x = input.nextInt();
@@ -37,7 +37,7 @@ public class Main {
 
         // 흰색, 검은색 타일 개수
         int b = 0, w = 0;
-        for (int i = 0; i < 2 * MAX_R; i++) {
+        for (int i = 0; i < 2 * OFFSET; i++) {
             if (arr[i] == 1) b++;
             else if (arr[i] == 2) w++;
         }
