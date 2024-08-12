@@ -43,7 +43,7 @@ public class Main {
         System.out.println(count3);
     }
 
-    public static boolean inRange(int x, int y, int n) {
+    public static boolean inRange(int x, int y, int n + 1) {
         return (0 <= x && x < n && 0 <= y && y <= n);
     }
 }
