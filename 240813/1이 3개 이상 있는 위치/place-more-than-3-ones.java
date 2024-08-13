@@ -27,7 +27,7 @@ public class Main {
             for (int y = 0; y < n; y++) {
                 int count = 0; // 1의 개수를 세는 변수
 
-                for (int dirNum = 0; dirNum < n; dirNum++) {
+                for (int dirNum = 0; dirNum < 4; dirNum++) {
                     int nx = x + dx[dirNum];
                     int ny = y + dy[dirNum];
 
