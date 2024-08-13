@@ -1,13 +1,15 @@
 import java.util.Scanner;
 
 public class Main {
+    public static final int MAX_N = 100;
+
     public static void main(String[] args) {
         // 여기에 코드를 작성해주세요.
         Scanner input = new Scanner(System.in);
 
         int n = input.nextInt();
 
-        int[][] arr = new int[n + 1][n + 1];
+        int[][] arr = new int[MAX_N][MAX_N];
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
