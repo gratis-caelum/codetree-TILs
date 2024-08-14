@@ -18,8 +18,8 @@ public class Main {
         int dirNum = 0; // 동쪽부터 시작
         int moveNum = 1; // 이동 횟수
         int cnt = 1;
-        int x = (n / 2);
-        int y = (n / 2);
+        int x = x + dx[dirNum];
+        int y = y + dy[dirNum];
 
         while(!inRange(x, y)) {
             for (int i = 0; i < moveNum; i++) {
@@ -35,7 +35,7 @@ public class Main {
             }
 
             dirNum = (dirNum + 1) % 4; // 동 - 북 - 서 - 남
-            
+
             if (dirNum == 0 || dirNum == 2) {
                 moveNum++;
             }
