@@ -102,4 +102,21 @@ public class Main {
             for (int step = 1; step < 5; step++) {
                 int nx = x - dx * step;
                 int ny = y - dy * step;
-                if (nx >= 0 && nx < SIZE && ny >= 0 && ny < SIZE && board[nx][
+                if (nx >= 0 && nx < SIZE && ny >= 0 && ny < SIZE && board[nx][ ```java
+                if (nx >= 0 && nx < SIZE && ny >= 0 && ny < SIZE && board[nx][ny] == player) {
+                    count++;
+                } else {
+                    break;
+                }
+            }
+            
+            // 연속된 바둑알이 5개인 경우, 시작점과 끝점 중간의 위치 반환
+            if (count == 5) {
+                int midX = (x + startX) / 2;
+                int midY = (y + startY) / 2;
+                return new int[]{midX, midY};
+            }
+        }
+        return new int[]{x, y};  // 기본값으로 현재 위치 반환
+    }
+}
