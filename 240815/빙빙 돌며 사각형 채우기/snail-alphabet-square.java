@@ -23,10 +23,7 @@ public class Main {
         for (int i = 2; i <= n * m; i++) {
             arr[x][y] = currentChar;
 
-            /
-            if (currentChar > 'Z') {
-                currentChar = 'A';
-            }
+        
             // 위치 이동 (남 - 동 - 서 - 북)
             int nx = x + dx[dirNum];
             int ny = y + dy[dirNum];
@@ -40,6 +37,9 @@ public class Main {
             }
             // 알파벳 순환
             currentChar = (char) (currentChar + 1);
+            if (currentChar > 'Z') {
+                currentChar = 'A';
+            }
             // 하나씩 이동할 때마다 값 저장
             x += dx[dirNum];
             y += dy[dirNum];
