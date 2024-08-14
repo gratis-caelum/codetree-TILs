@@ -19,7 +19,7 @@ public class Main {
         int dirNum = 0; // 남 : 0, 서 : 1, 북 : 2, 동 : 3
         int x = 0; int y = 0; // 초기 위치 설정
         arr[0][0] = 1;
-        for (int i = 2; i < n * m; i++) {
+        for (int i = 2; i <= n * m; i++) {
             // 위치 이동 (남 - 동 - 서 - 북)
             int nx = x + dx[dirNum];
             int ny = y + dy[dirNum];
