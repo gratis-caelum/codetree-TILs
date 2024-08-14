@@ -1,40 +1,41 @@
-public class Main {
-    public static int soln(String a) {
-        // 2진수로 변환
-        int[] binaryA = new int[a.length()];
-        for (int i = 0; i < a.length(); i++) {
-            binaryA[i] = a.charAt(i) - '0';
-        }
+import java.util.Scanner;
 
-        // 0인 자리를 1로 바꾸어 만들 수 있는 가장 큰 수 찾기
-        int maxNum = 0;
-        for (int i = 0; i < binaryA.length; i++) {
-            if (binaryA[i] == 0) {
-                binaryA[i] = 1;
-                int num = convertToDecimal(binaryA);
-                maxNum = Math.max(maxNum, num);
-                binaryA[i] = 0;
+public class Main {
+    public static void main(String[] args) {
+        // 예제 입력
+        Scanner input = new Scanner(System.in);
+        String a = input.nextInt();
+        
+        // 가능한 최대값을 찾는 함수 호출
+        int maxValue = findMaxPossibleValue(a);
+        
+        // 결과 출력
+        System.out.println(maxValue);  // 출력: 14
+    }
+
+    // 주어진 2진수 문자열에서 정확히 한 숫자를 바꿔서 만들 수 있는 가능한 최대값을 찾는 함수
+    public static int findMaxPossibleValue(String a) {
+        int maxValue = 0;
+        
+        // 2진수 문자열의 각 자리를 순회
+        for (int i = 0; i < a.length(); i++) {
+            // 새로운 2진수 문자열 생성 (한 비트를 뒤집음)
+            String newA;
+            if (a.charAt(i) == '0') {
+                newA = a.substring(0, i) + '1' + a.substring(i + 1);
+            } else {
+                newA = a.substring(0, i) + '0' + a.substring(i + 1);
+            }
+            
+            // 새로운 2진수 문자열을 10진수로 변환
+            int newValue = Integer.parseInt(newA, 2);
+            
+            // 최대값 갱신
+            if (newValue > maxValue) {
+                maxValue = newValue;
             }
         }
-
-        // 입력이 "1"일 때는 0을 반환
-        if (a.equals("1")) {
-            return 0;
-        }
-
-        return maxNum;
-    }
-
-    private static int convertToDecimal(int[] binaryArray) {
-        int decimal = 0;
-        for (int i = 0; i < binaryArray.length; i++) {
-            decimal = decimal * 2 + binaryArray[i];
-        }
-        return decimal;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(soln("1")); // 0
-        System.out.println(soln("1010")); // 14
+        
+        return maxValue;
     }
 }
