@@ -28,10 +28,12 @@ public class Main {
         int maxSize = 0;
         
         // 초기 상태에서의 차이를 기록합니다.
-        prefixCounts.put(0, people.get(0).position);
+        prefixCounts.put(0, -1);
         
         // 사람들의 위치를 순회하면서 G와 H의 개수를 누적합니다.
-        for (Person person : people) {
+        for (int i = 0; i < N; i++) {
+            Person person = people.get(i);
+            
             if (person.alphabet == 'G') {
                 gCount++;
             } else {
@@ -41,17 +43,12 @@ public class Main {
             // G와 H의 누적 개수 차이
             int diff = gCount - hCount;
             
-            if (diff == 0) {
-                // G와 H의 개수가 같은 경우
-                maxSize = Math.max(maxSize, person.position - people.get(0).position);
-            }
-            
             if (prefixCounts.containsKey(diff)) {
                 // 이전에 같은 diff가 나온 적이 있으면
-                maxSize = Math.max(maxSize, person.position - prefixCounts.get(diff));
+                maxSize = Math.max(maxSize, person.position - people.get(prefixCounts.get(diff) + 1).position);
             } else {
                 // 처음 나온 diff라면 현재 위치를 기록
-                prefixCounts.put(diff, person.position);
+                prefixCounts.put(diff, i);
             }
         }
         
