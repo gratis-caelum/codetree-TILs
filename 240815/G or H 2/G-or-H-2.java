@@ -3,91 +3,70 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
-        // N 입력
+        
+        // 첫 번째 줄에서 N을 입력받습니다.
         int N = scanner.nextInt();
         
-        // 사람들의 위치와 팻말 정보를 저장할 리스트
+        // 사람들의 위치와 알파벳 정보를 저장할 리스트
         List<Person> people = new ArrayList<>();
         
-        // 사람들의 위치와 팻말 정보 입력
+        // N개의 줄에 걸쳐 위치와 알파벳 정보를 입력받습니다.
         for (int i = 0; i < N; i++) {
             int position = scanner.nextInt();
-            char letter = scanner.next().charAt(0);
-            people.add(new Person(position, letter));
+            char alphabet = scanner.next().charAt(0);
+            people.add(new Person(position, alphabet));
         }
         
-        // 위치를 기준으로 정렬
-        people.sort(Comparator.comparingInt(p -> p.position));
+        // 위치를 기준으로 정렬합니다.
+        Collections.sort(people, Comparator.comparingInt(p -> p.position));
         
-        // 최대 사진 크기 계산
-        int maxPhotoSize = 0;
+        // G와 H의 누적 개수를 기록할 맵
+        Map<Integer, Integer> prefixCounts = new HashMap<>();
         
-        // 오로지 'G'로만 이루어진 경우
-        maxPhotoSize = Math.max(maxPhotoSize, calculateMaxPhotoSize(people, 'G'));
-        
-        // 오로지 'H'로만 이루어진 경우
-        maxPhotoSize = Math.max(maxPhotoSize, calculateMaxPhotoSize(people, 'H'));
-        
-        // 'G'와 'H'가 정확히 같은 개수만큼 나오는 경우
-        maxPhotoSize = Math.max(maxPhotoSize, calculateMaxBalancedPhotoSize(people));
-        
-        // 결과 출력
-        System.out.println(maxPhotoSize);
-
-        scanner.close();
-    }
-    
-    // 특정 문자로만 이루어진 최대 사진 크기를 계산하는 함수
-    private static int calculateMaxPhotoSize(List<Person> people, char target) {
-        int start = -1;
-        int end = -1;
-        for (int i = 0; i < people.size(); i++) {
-            if (people.get(i).letter == target) {
-                if (start == -1) {
-                    start = people.get(i).position;
-                }
-                end = people.get(i).position;
-            }
-        }
-        return (start != -1 && end != -1) ? end - start : 0;
-    }
-    
-    // 'G'와 'H'가 정확히 같은 개수만큼 나오는 최대 사진 크기를 계산하는 함수
-    private static int calculateMaxBalancedPhotoSize(List<Person> people) {
-        Map<Integer, Integer> balanceMap = new HashMap<>();
-        int balance = 0;
+        int gCount = 0;
+        int hCount = 0;
         int maxSize = 0;
         
-        balanceMap.put(0, -1);
+        // 초기 상태에서의 차이를 기록합니다.
+        prefixCounts.put(0, people.get(0).position);
         
-        for (int i = 0; i < people.size(); i++) {
-            if (people.get(i).letter == 'G') {
-                balance++;
+        // 사람들의 위치를 순회하면서 G와 H의 개수를 누적합니다.
+        for (Person person : people) {
+            if (person.alphabet == 'G') {
+                gCount++;
             } else {
-                balance--;
+                hCount++;
             }
             
-            if (balanceMap.containsKey(balance)) {
-                int start = balanceMap.get(balance);
-                int end = people.get(i).position;
-                maxSize = Math.max(maxSize, end - people.get(start + 1).position);
+            // G와 H의 누적 개수 차이
+            int diff = gCount - hCount;
+            
+            if (diff == 0) {
+                // G와 H의 개수가 같은 경우
+                maxSize = Math.max(maxSize, person.position - people.get(0).position);
+            }
+            
+            if (prefixCounts.containsKey(diff)) {
+                // 이전에 같은 diff가 나온 적이 있으면
+                maxSize = Math.max(maxSize, person.position - prefixCounts.get(diff));
             } else {
-                balanceMap.put(balance, i);
+                // 처음 나온 diff라면 현재 위치를 기록
+                prefixCounts.put(diff, person.position);
             }
         }
         
-        return maxSize;
+        // 최대 사진 크기를 출력합니다.
+        System.out.println(maxSize);
     }
     
-    // 사람 정보를 저장할 클래스
+    // 사람의 위치와 알파벳 정보를 저장하는 클래스
     static class Person {
         int position;
-        char letter;
+        char alphabet;
         
-        Person(int position, char letter) {
+        Person(int position, char alphabet) {
             this.position = position;
-            this.letter = letter;
+            this.alphabet = alphabet;
         }
     }
 }
