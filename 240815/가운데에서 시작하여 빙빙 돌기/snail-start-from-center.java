@@ -1,8 +1,6 @@
 import java.util.Scanner;
 
 public class Main {
-    public static int[] dx = {0, -1, 0, 1}; // 북 - 서 - 남 - 동
-    public static int[] dy = {1, 0, -1, 0}; // 북 - 서 - 남 - 동
     public static int n;
     public static final int MAX = 100;
 
@@ -18,16 +16,15 @@ public class Main {
         int dirNum = 0; // 동쪽부터 시작
         int moveNum = 1; // 이동 횟수
         int cnt = 1;
+        int x = (n / 2);
+        int y = (n / 2);
         
-        int x, y;
-        x += dx[dirNum];
-        y += dy[dirNum];
-
-
         while(!inRange(x, y)) {
             for (int i = 0; i < moveNum; i++) {
                 arr[x][y] = cnt++;
                 
+                int[] dx = {0, -1, 0, 1}; // 북 - 서 - 남 - 동
+                int[] dy = {1, 0, -1, 0}; // 북 - 서 - 남 - 동
                 x += dx[dirNum];
                 y += dy[dirNum];
 
