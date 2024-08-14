@@ -4,7 +4,8 @@ public class Main {
     public static void main(String[] args) {
         // 예제 입력
         Scanner input = new Scanner(System.in);
-        String a = input.nextInt();
+
+        String a = input.nextLine();
         
         // 가능한 최대값을 찾는 함수 호출
         int maxValue = findMaxPossibleValue(a);
