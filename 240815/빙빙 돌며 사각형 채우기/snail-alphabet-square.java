@@ -20,7 +20,7 @@ public class Main {
         int x = 0; int y = 0; // 초기 위치 설정
         char currentChar = 'A';
 
-        for (int i = 2; i < n * m; i++) {
+        for (int i = 2; i <= n * m; i++) {
             arr[x][y] = currentChar;
 
             // 알파벳 순환
