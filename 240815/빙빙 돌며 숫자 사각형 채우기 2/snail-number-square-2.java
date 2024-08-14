@@ -13,7 +13,7 @@ public class Main {
         n = input.nextInt();
         m = input.nextInt();
 
-        int[][] arr = new int[MAX][MAX];
+        int[][] arr = new int[MAX + 1][MAX + 1];
 
 
         int dirNum = 0; // 남 : 0, 서 : 1, 북 : 2, 동 : 3
