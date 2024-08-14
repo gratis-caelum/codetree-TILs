@@ -26,19 +26,18 @@ public class Main {
             int nx = x + dx[dirNum];
             int ny = y + dy[dirNum];
 
-            // 더 이상 나아갈 수 없으면 시계방향으로 90도 회전
+            // 다음 위치가 범위를 벗어나거나 이미 채워진 경우, 방향 전환
             if (!inRange(nx, ny) || arr[nx][ny] != 0) {
                 dirNum = (dirNum + 1) % 4; // 시계방향 회전
-                if (dirNum < 0) {
-                    dirNum += 4;
-                }
+                nx = x + dx[dirNum];
+                ny = y + dy[dirNum];
             }
 
-            // 하나씩 이동할 때마다 값 저장
-            x += dx[dirNum];
-            y += dy[dirNum];
-
+            // 위치 갱신
+            x = nx;
+            y = ny;
         }
+
 
         // 출력
         for (int i = 0; i < n; i++) {
