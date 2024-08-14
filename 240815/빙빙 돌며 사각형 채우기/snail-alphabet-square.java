@@ -20,10 +20,10 @@ public class Main {
         int x = 0; int y = 0; // 초기 위치 설정
         char currentChar = 'A';
 
-        for (int i = 2; i <= n * m; i++) {
+        for (int i = 1; i <= n * m; i++) {
             arr[x][y] = currentChar;
 
-            // 알파벳을 순환시킴
+            // 알파벳 순환
             currentChar = (char) (currentChar + 1);
             if (currentChar > 'Z') {
                 currentChar = 'A';
@@ -35,17 +35,14 @@ public class Main {
             // 더 이상 나아갈 수 없으면 반시계방향으로 90도 회전
             if (!inRange(nx, ny) || arr[nx][ny] != '\u0000') {
                 dirNum = (dirNum + 1) % 4; // 시계방향 회전
-                // 하나씩 이동할 때마다 값 저장
-                x += dx[dirNum];
-                y += dy[dirNum];
                 if (dirNum < 0) {
                     dirNum += 4;
-                    
                 }
             }
             
-            x = nx;
-            y = ny;
+            // 하나씩 이동할 때마다 값 저장
+            x += dx[dirNum];
+            y += dy[dirNum];
 
         }
 
