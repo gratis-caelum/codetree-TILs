@@ -28,7 +28,7 @@ public class Main {
                 int[] query = queries[i];
                 int[] queryDigits = getDigits(query[0]);
                 int count1 = countExactMatches(candidate, queryDigits);
-                int count2 = countPartialMatches(candidate, queryDigits) - count1;
+                int count2 = countPartialMatches(candidate, queryDigits);
                 if (count1 != query[1] || count2 != query[2]) {
                     isValid = false;
                     break;
@@ -77,13 +77,30 @@ public class Main {
     // 다른 자리에 있는 숫자의 개수를 세는 함수
     private static int countPartialMatches(int[] candidate, int[] query) {
         int count = 0;
+        boolean[] usedCandidate = new boolean[3];
+        boolean[] usedQuery = new boolean[3];
+
+        // 정확히 같은 자리에 있는 숫자는 제외
         for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (i != j && candidate[i] == query[j]) {
-                    count++;
+            if (candidate[i] == query[i]) {
+                usedCandidate[i] = true;
+                usedQuery[i] = true;
+            }
+        }
+
+        // 다른 자리에 있는 숫자의 개수를 셈
+        for (int i = 0; i < 3; i++) {
+            if (!usedCandidate[i]) {
+                for (int j = 0; j < 3; j++) {
+                    if (!usedQuery[j] && candidate[i] == query[j]) {
+                        count++;
+                        usedQuery[j] = true;
+                        break;
+                    }
                 }
             }
         }
+
         return count;
     }
 }
