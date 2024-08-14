@@ -17,6 +17,11 @@ public class Main {
             }
         }
 
+        // 입력이 "1"일 때는 0을 반환
+        if (a.equals("1")) {
+            return 0;
+        }
+
         return maxNum;
     }
 
@@ -29,6 +34,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        System.out.println(soln("1")); // 0
         System.out.println(soln("1010")); // 14
     }
 }
