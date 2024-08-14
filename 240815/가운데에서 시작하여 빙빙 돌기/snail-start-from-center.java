@@ -16,26 +16,29 @@ public class Main {
 
 
         int dirNum = 0; // 동쪽부터 시작
-
+        int moveNum = 1; // 이동 횟수
+        int cnt = 1;
         int x = (n / 2);
         int y = (n / 2);
 
-        for (int i = 1; i <= n * n; i++) {
-            arr[x][y] = i; // 현재 위치에 숫자 할당
+        while(!inRange(x, y)) {
+            for (int i = 0; i < moveNum; i++) {
+                arr[x][y] = cnt++;
+                
+                x += dx[dirNum];
+                y += dy[dirNum];
 
-            int nx = x + dx[dirNum];
-            int ny = y + dy[dirNum];
-
-            // 다음 위치가 범위를 벗어나거나 이미 채워진 경우, 방향 전환
-            if (!inRange(nx, ny) || arr[nx][ny] != 0) {
-                dirNum = (dirNum + 1) % 4; // 시계방향 회전
-                nx = x + dx[dirNum];
-                ny = y + dy[dirNum];
+                // 격자를 벗어나면 종료
+                if (inRange(x, y)) {
+                    break;
+                }
             }
 
-            // 위치 갱신
-            x = nx;
-            y = ny;
+            dirNum = (dirNum + 1) % 4; // 동 - 북 - 서 - 남
+            
+            if (dirNum == 0 || dirNum == 2) {
+                moveNum++;
+            }
         }
 
 
