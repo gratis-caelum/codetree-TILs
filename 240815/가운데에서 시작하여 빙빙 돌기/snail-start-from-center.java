@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class Main {
-    public static int[] dx = {1, 0, -1, 0}; // 동 - 북 - 서 - 남
-    public static int[] dy = {0, 1, 0, -1}; // 동 - 북 - 서 - 남
+    public static int[] dx = {0, -1, 0, 1}; // 북 - 동 - 서 - 남
+    public static int[] dy = {1, 0, -1, 0}; // 북 - 동 - 서 - 남
     public static int n;
     public static final int MAX = 100;
 
@@ -15,7 +15,7 @@ public class Main {
         int[][] arr = new int[MAX][MAX];
 
 
-        int dirNum = 1; // 동쪽부터 시작
+        int dirNum = 0; // 동쪽부터 시작
 
         int x = (n / 2);
         int y = (n / 2);
