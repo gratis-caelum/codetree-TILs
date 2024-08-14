@@ -102,7 +102,7 @@ public class Main {
             for (int step = 1; step < 5; step++) {
                 int nx = x - dx * step;
                 int ny = y - dy * step;
-                if (nx >= 0 && nx < SIZE && ny >= 0 && ny < SIZE && board[nx][ ```java
+            
                 if (nx >= 0 && nx < SIZE && ny >= 0 && ny < SIZE && board[nx][ny] == player) {
                     count++;
                 } else {
