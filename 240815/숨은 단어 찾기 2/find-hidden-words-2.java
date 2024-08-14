@@ -1,61 +1,56 @@
 import java.util.Scanner;
 
 public class Main {
-    private static final int[][] DIRECTIONS = {
-        {0, 1}, // 오른쪽
-        {1, 0}, // 아래쪽
-        {1, 1}, // 오른쪽 아래 대각선
-        {1, -1} // 왼쪽 아래 대각선
-    };
-    private static final String TARGET = "LEE";
+    public static final int DIR_NUM = 8;
+    public static final int MAX_N = 100;
+    
+    public static int n, m;
+    public static String[] arr = new String[MAX_N];
+    
+    public static int[] dx = new int[]{1, 1, 1, -1, -1, -1, 0, 0};
+    public static int[] dy = new int[]{-1, 0, 1, -1, 0, 1, -1, 1};
+    
+    public static boolean inRange(int x, int y) {
+        return 0 <= x && x < n && 0 <= y && y < m;
+    }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
+        // 입력
+        n = sc.nextInt();
+        m = sc.nextInt();
+        for(int i = 0; i < n; i++)
+            arr[i] = sc.next();
         
-        // N과 M 입력
-        int N = scanner.nextInt();
-        int M = scanner.nextInt();
-        scanner.nextLine(); // 개행 문자 소비
-        
-        // 문자열 배열 입력
-        char[][] board = new char[N][M];
-        for (int i = 0; i < N; i++) {
-            board[i] = scanner.nextLine().toCharArray();
-        }
-        
-        // 'LEE'의 개수 세기
-        int count = 0;
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                for (int[] direction : DIRECTIONS) {
-                    if (checkWord(board, i, j, direction)) {
-                        count++;
+        // 모든 좌표에서 다 확인해봅니다.
+        int cnt = 0;
+        for(int i = 0; i < n; i++)
+            // 격자를 벗어나지 않을 범위로만 잡습니다.
+            for(int j = 0; j < m; j++) {
+                
+                if(arr[i].charAt(j) != 'L') continue;
+                
+                for(int k = 0; k < DIR_NUM; k++) {
+                    int curt = 1;
+                    int curx = i;
+                    int cury = j;
+                    while(true) {
+                        int nx = curx + dx[k];
+                        int ny = cury + dy[k];
+                        if(inRange(nx, ny) == false)
+                            break;
+                        if(arr[nx].charAt(ny) != 'E')
+                           break;
+                        curt++;
+                        curx = nx;
+                        cury = ny;
+                    }
+                    if(curt >= 3) {
+                        cnt++;
                     }
                 }
             }
-        }
         
-        // 결과 출력
-        System.out.println(count);
-        
-        scanner.close();
-    }
-
-    // 주어진 방향으로 'LEE'가 있는지 확인하는 함수
-    private static boolean checkWord(char[][] board, int x, int y, int[] direction) {
-        int N = board.length;
-        int M = board[0].length;
-        
-        for (int k = 0; k < TARGET.length(); k++) {
-            int nx = x + direction[0] * k;
-            int ny = y + direction[1] * k;
-            
-            // 범위를 벗어나거나 문자가 일치하지 않으면 false 반환
-            if (nx < 0 || nx >= N || ny < 0 || ny >= M || board[nx][ny] != TARGET.charAt(k)) {
-                return false;
-            }
-        }
-        
-        return true;
+        System.out.print(cnt);
     }
 }
