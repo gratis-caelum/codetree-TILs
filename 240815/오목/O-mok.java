@@ -27,7 +27,8 @@ public class Main {
                     int winner = board[i][j];
                     if (checkWin(board, i, j, winner)) {
                         System.out.println(winner);
-                        System.out.println((i + 1) + " " + (j + 1));
+                        int[] winningPosition = findWinningPosition(board, i, j, winner);
+                        System.out.println((winningPosition[0] + 1) + " " + (winningPosition[1] + 1));
                         return;
                     }
                 }
@@ -74,4 +75,31 @@ public class Main {
         }
         return false;
     }
-}
+
+    // 승리한 바둑알의 위치를 찾는 함수
+    private static int[] findWinningPosition(int[][] board, int x, int y, int player) {
+        for (int[] direction : DIRECTIONS) {
+            int count = 1;
+            int dx = direction[0];
+            int dy = direction[1];
+            int startX = x;
+            int startY = y;
+            
+            // 한 방향으로 연속된 바둑알 개수 세기
+            for (int step = 1; step < 5; step++) {
+                int nx = x + dx * step;
+                int ny = y + dy * step;
+                if (nx >= 0 && nx < SIZE && ny >= 0 && ny < SIZE && board[nx][ny] == player) {
+                    count++;
+                    startX = nx;
+                    startY = ny;
+                } else {
+                    break;
+                }
+            }
+            
+            // 반대 방향으로 연속된 바둑알 개수 세기
+            for (int step = 1; step < 5; step++) {
+                int nx = x - dx * step;
+                int ny = y - dy * step;
+                if (nx >= 0 && nx < SIZE && ny >= 0 && ny < SIZE && board[nx][
