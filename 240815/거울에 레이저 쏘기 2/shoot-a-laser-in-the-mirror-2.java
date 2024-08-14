@@ -6,7 +6,7 @@ public class Main {
     public static char[][] matrix = new char[MAX_N][MAX_N];
     public static int x;
     public static int y;
-    public static int dir;  // 레이저 위치 (0 : 동, 1 : 남, 2 : 서, 3 : 북)
+    public static int dir; 
 
 
     public static void main(String[] args) {
@@ -24,7 +24,7 @@ public class Main {
             }
         }
 
-        int k = input.nextInt() - 1; // 레이저를 쏘는 위치 (0-based index)
+        int k = input.nextInt(); // 레이저를 쏘는 위치 (0-based index)
 
         initialize(k);
 
