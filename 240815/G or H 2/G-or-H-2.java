@@ -1,69 +1,52 @@
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        
-        // 첫 번째 줄에서 N을 입력받습니다.
-        int N = scanner.nextInt();
-        
-        // 사람들의 위치와 알파벳 정보를 저장할 리스트
-        List<Person> people = new ArrayList<>();
-        
-        // N개의 줄에 걸쳐 위치와 알파벳 정보를 입력받습니다.
-        for (int i = 0; i < N; i++) {
-            int position = scanner.nextInt();
-            char alphabet = scanner.next().charAt(0);
-            people.add(new Person(position, alphabet));
-        }
-        
-        // 위치를 기준으로 정렬합니다.
-        Collections.sort(people, Comparator.comparingInt(p -> p.position));
-        
-        // G와 H의 누적 개수를 기록할 맵
-        Map<Integer, Integer> prefixCounts = new HashMap<>();
-        
-        int gCount = 0;
-        int hCount = 0;
-        int maxSize = 0;
-        
-        // 초기 상태에서의 차이를 기록합니다.
-        prefixCounts.put(0, -1);
-        
-        // 사람들의 위치를 순회하면서 G와 H의 개수를 누적합니다.
-        for (int i = 0; i < N; i++) {
-            Person person = people.get(i);
-            
-            if (person.alphabet == 'G') {
-                gCount++;
-            } else {
-                hCount++;
-            }
-            
-            // G와 H의 누적 개수 차이
-            int diff = gCount - hCount;
-            
-            if (prefixCounts.containsKey(diff)) {
-                // 이전에 같은 diff가 나온 적이 있으면
-                maxSize = Math.max(maxSize, person.position - people.get(prefixCounts.get(diff) + 1).position);
-            } else {
-                // 처음 나온 diff라면 현재 위치를 기록
-                prefixCounts.put(diff, i);
-            }
-        }
-        
-        // 최대 사진 크기를 출력합니다.
-        System.out.println(maxSize);
-    }
+    public static final int MAX_NUM = 100;
     
-    // 사람의 위치와 알파벳 정보를 저장하는 클래스
-    static class Person {
-        int position;
-        char alphabet;
-        
-        Person(int position, char alphabet) {
-            this.position = position;
-            this.alphabet = alphabet;
+    public static int n, k;
+    public static int[] arr = new int[MAX_NUM + 1];
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        // 입력
+        n = sc.nextInt();
+        for(int i = 0; i < n; i++) {
+            int x = sc.nextInt();
+            char c = sc.next().charAt(0);
+            
+            if(c == 'G')
+                arr[x] = 1;
+            else
+                arr[x] = 2;
         }
+        
+        // 모든 구간의 시작점을 잡아봅니다.
+        int maxLen = 0;
+        for(int i = 0; i <= MAX_NUM; i++) {
+            for(int j = i + 1; j <= MAX_NUM; j++) {
+                // i와 j 위치에 사람이 있는지 확인합니다.
+                if(arr[i] == 0 || arr[j] == 0)
+                    continue;
+                
+                // 해당 구간 내 g와 h의 개수를 구합니다.
+                int cntG = 0;
+                int cntH = 0;
+                
+                for(int k = i; k <= j; k++) {
+                    if(arr[k] == 1)
+                        cntG++;
+                    if(arr[k] == 2)
+                        cntH++;
+                }
+                
+                // 조건을 만족할 때 구간의 길이를 구해 최댓값과 비교합니다.
+                if(cntG == 0 || cntH == 0 || cntG == cntH) {
+                    int len = j - i;
+                    maxLen = Math.max(maxLen, len);
+                }
+            }
+        }
+                            
+        System.out.print(maxLen);
     }
 }
