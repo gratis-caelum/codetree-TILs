@@ -3,9 +3,6 @@ import java.util.Scanner;
 public class Main {
     public static int n;
     public static final int MAX_N = 1000;
-
-    public static int[] dx = {1, 0, -1, 0}; // 동 - 남 - 서 - 북
-    public static int[] dy = {0, -1, 0, 1}; // 동 - 남 - 서 - 북
     public static char[][] matrix = new char[MAX_N][MAX_N];
     public static int x;
     public static int y;
@@ -74,6 +71,8 @@ public class Main {
 
     
     public static void move(int nextDir) {
+        int[] dx = {1, 0, -1, 0}; // 동 - 남 - 서 - 북
+        int[] dy = {0, -1, 0, 1}; // 동 - 남 - 서 - 북
         x += dx[nextDir];
         y += dy[nextDir];
         dir = nextDir;
