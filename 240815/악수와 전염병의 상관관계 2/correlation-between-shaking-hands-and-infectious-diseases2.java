@@ -1,90 +1,49 @@
-import java.util.*;
-
-class Developer {
-    public boolean infected; // 감염 여부
-    public int infectionCount; // 감염시킬 수 있는 횟수
-
-    public Developer(int infectionCount) {
-        infected = false;
-        this.infectionCount = infectionCount;
-    }
-
-    public void infect() {
-        this.infected = true; // 감염 처리
-    }
-}
+import java.util.Scanner;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt(); // 개발자 수
+        int K = sc.nextInt(); // 최대 전염 횟수
+        int P = sc.nextInt(); // 첫 감염자 (1-based index)
+        int T = sc.nextInt(); // 악수의 수
 
-        int N = input.nextInt(); // 개발자 수
-        int K = input.nextInt(); // 개발자별 악수로 감염시킬 수 있는 최대 횟수
-        int P = input.nextInt(); // 초기 감염된 개발자 (1-based index)
-        int T = input.nextInt(); // 전체 악수의 수
+        int[] infected = new int[N]; // 감염 여부 배열
+        infected[P-1] = 1;           // 첫 감염자 설정
+        int[] con = new int[N];      // 전염 횟수 배열
 
-        Developer[] developers = new Developer[N];
-
-        for (int i = 0; i < N; i++) {
-            developers[i] = new Developer(K);
-        }
-
-        // 초기 감염된 개발자 설정 (0-based index로 변환)
-        developers[P - 1].infect();
-
-        // 악수 정보를 저장할 리스트 (시간, 개발자 X, 개발자 Y)
-        List<int[]> handshakes = new ArrayList<>();
+        // 입력값 받기
+        int[][] inputs = new int[T][3];
         for (int i = 0; i < T; i++) {
-            int t = input.nextInt();  // 악수 발생 시간
-            int devX = input.nextInt() - 1; // 개발자 X (0-based index)
-            int devY = input.nextInt() - 1; // 개발자 Y (0-based index)
-            handshakes.add(new int[]{t, devX, devY});
+            inputs[i][0] = sc.nextInt();  // 악수 시간
+            inputs[i][1] = sc.nextInt() - 1;  // 개발자 X (0-based index)
+            inputs[i][2] = sc.nextInt() - 1;  // 개발자 Y (0-based index)
         }
 
-        // 악수 정보를 시간 순서대로 정렬
-        handshakes.sort(Comparator.comparingInt(a -> a[0]));
+        // 입력값 정렬 (첫 번째 열 기준으로 시간 순서 정렬)
+        Arrays.sort(inputs, (a, b) -> Integer.compare(a[0], b[0]));
 
-        // 악수 정보 처리
-        for (int i = 0; i < handshakes.size(); ) {
-            int currentTime = handshakes.get(i)[0]; // 현재 시간
+        // 악수 처리
+        for (int i = 0; i < T; i++) {
+            int x = inputs[i][1];
+            int y = inputs[i][2];
 
-            // 동일한 시간에 발생한 악수들을 수집
-            List<int[]> currentHandshakes = new ArrayList<>();
-            while (i < handshakes.size() && handshakes.get(i)[0] == currentTime) {
-                currentHandshakes.add(handshakes.get(i));
-                i++;
+            // x가 감염자이고 전염 횟수가 남아있는 경우
+            if (infected[x] == 1 && con[x] < K) {
+                con[x]++;
+                infected[y] = 1;
             }
-
-            // 감염 상태 업데이트
-            Set<Integer> newlyInfected = new HashSet<>();
-            for (int[] handshake : currentHandshakes) {
-                int devX = handshake[1];
-                int devY = handshake[2];
-
-                if (developers[devX].infected && developers[devX].infectionCount > 0) {
-                    if (!developers[devY].infected) {
-                        newlyInfected.add(devY); // 나중에 감염 처리
-                    }
-                    developers[devX].infectionCount--; // 개발자 X의 감염 가능 횟수 감소
-                }
-
-                if (developers[devY].infected && developers[devY].infectionCount > 0) {
-                    if (!developers[devX].infected) {
-                        newlyInfected.add(devX); // 나중에 감염 처리
-                    }
-                    developers[devY].infectionCount--; // 개발자 Y의 감염 가능 횟수 감소
-                }
-            }
-
-            // 새로 감염된 개발자 처리
-            for (int dev : newlyInfected) {
-                developers[dev].infect();
+            // y가 감염자이고 전염 횟수가 남아있는 경우
+            if (infected[y] == 1 && con[y] < K) {
+                con[y]++;
+                infected[x] = 1;
             }
         }
 
-        // 각 개발자의 감염 상태 출력 (1이면 감염, 0이면 비감염)
+        // 감염 여부 출력
         for (int i = 0; i < N; i++) {
-            System.out.print(developers[i].infected ? 1 : 0);
+            System.out.print(infected[i]);
         }
     }
 }
