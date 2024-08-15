@@ -23,7 +23,7 @@ public class Main {
 
         int N = input.nextInt(); // N명의 개발자
         int K = input.nextInt(); // 감염시킬 수 있는 악수의 횟수
-        int P = input.nextInt() - 1; // 초기 전염된 개발자
+        int P = input.nextInt(); // 초기 전염된 개발자
         int T = input.nextInt(); // 악수의 총 횟수
 
         Developer[] developers = new Developer[N];
@@ -33,7 +33,7 @@ public class Main {
         }
 
         // 초기 감염자 설정
-        developers[P - 1].infection(); // 0-based index로 바꿈
+        developers[P].infection(); // 0-based index로 바꿈
 
         // 악수 정보를 저장할 List
         List<int[]> handshakes = new ArrayList<>();
@@ -41,8 +41,8 @@ public class Main {
         // 악수 정보 처리
         for (int i = 0; i < T; i++) {
             int t = input.nextInt(); // 시간
-            int devX = input.nextInt() - 1; // x 개발자 (0-based index)
-            int devY = input.nextInt() - 1; // y 개발자 (0-based index)
+            int devX = input.nextInt(); // x 개발자 (0-based index)
+            int devY = input.nextInt(); // y 개발자 (0-based index)
             handshakes.add(new int[] {t, devX, devY}); 
         }
         
