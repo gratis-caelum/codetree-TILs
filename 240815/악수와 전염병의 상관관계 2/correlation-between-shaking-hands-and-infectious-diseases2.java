@@ -1,5 +1,4 @@
-import java.util.Scanner;
-import java.util.Arrays;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -22,28 +21,57 @@ public class Main {
         }
 
         // 입력값 정렬 (첫 번째 열 기준으로 시간 순서 정렬)
-        Arrays.sort(inputs, (a, b) -> Integer.compare(a[0], b[0]));
+        Arrays.sort(inputs, Comparator.comparingInt(a -> a[0]));
 
-        // 악수 처리
-        for (int i = 0; i < T; i++) {
-            int x = inputs[i][1];
-            int y = inputs[i][2];
+        int i = 0;
+        while (i < T) {
+            int currentTime = inputs[i][0];
+            List<int[]> currentHandshakes = new ArrayList<>();
 
-            // x가 감염자이고 전염 횟수가 남아있는 경우
-            if (infected[x] == 1 && con[x] < K) {
-                con[x]++;
-                infected[y] = 1;
+            // 현재 시간에 해당하는 모든 악수를 수집
+            while (i < T && inputs[i][0] == currentTime) {
+                currentHandshakes.add(inputs[i]);
+                i++;
             }
-            // y가 감염자이고 전염 횟수가 남아있는 경우
-            if (infected[y] == 1 && con[y] < K) {
-                con[y]++;
-                infected[x] = 1;
+
+            // 새로 감염될 수 있는 개발자를 추적하기 위해 세트를 사용
+            Set<Integer> newlyInfected = new HashSet<>();
+
+            // 동일한 시간에 발생한 모든 악수 처리
+            for (int[] handshake : currentHandshakes) {
+                int x = handshake[1];
+                int y = handshake[2];
+
+                // x가 감염자이고 전염 횟수가 남아있는 경우
+                if (infected[x] == 1 && con[x] < K) {
+                    newlyInfected.add(y);
+                }
+                // y가 감염자이고 전염 횟수가 남아있는 경우
+                if (infected[y] == 1 && con[y] < K) {
+                    newlyInfected.add(x);
+                }
+            }
+
+            // 실제로 감염시키고 전염 횟수를 감소
+            for (int dev : newlyInfected) {
+                if (infected[dev] == 0) { // 새로운 감염자만 처리
+                    infected[dev] = 1;
+                    for (int[] handshake : currentHandshakes) {
+                        int x = handshake[1];
+                        int y = handshake[2];
+                        if (dev == x && con[x] < K) {
+                            con[x]++;
+                        } else if (dev == y && con[y] < K) {
+                            con[y]++;
+                        }
+                    }
+                }
             }
         }
 
         // 감염 여부 출력
-        for (int i = 0; i < N; i++) {
-            System.out.print(infected[i]);
+        for (int j = 0; j < N; j++) {
+            System.out.print(infected[j]);
         }
     }
 }
