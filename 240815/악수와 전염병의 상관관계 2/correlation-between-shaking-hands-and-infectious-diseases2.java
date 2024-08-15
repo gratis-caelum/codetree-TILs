@@ -52,19 +52,20 @@ public class Main {
                 }
             }
 
-            // 실제로 감염시키고 전염 횟수를 감소
+            // 새롭게 감염된 개발자 처리 및 전염 횟수 증가
             for (int dev : newlyInfected) {
-                if (infected[dev] == 0) { // 새로운 감염자만 처리
-                    infected[dev] = 1;
-                    for (int[] handshake : currentHandshakes) {
-                        int x = handshake[1];
-                        int y = handshake[2];
-                        if (dev == x && con[x] < K) {
-                            con[x]++;
-                        } else if (dev == y && con[y] < K) {
-                            con[y]++;
-                        }
-                    }
+                infected[dev] = 1;  // 감염 처리
+            }
+            
+            // 전염 횟수 감소를 별도로 처리
+            for (int[] handshake : currentHandshakes) {
+                int x = handshake[1];
+                int y = handshake[2];
+                if (infected[x] == 1 && newlyInfected.contains(y)) {
+                    con[x]++;
+                }
+                if (infected[y] == 1 && newlyInfected.contains(x)) {
+                    con[y]++;
                 }
             }
         }
