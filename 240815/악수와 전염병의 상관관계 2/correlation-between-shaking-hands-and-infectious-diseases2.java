@@ -19,7 +19,6 @@ class Developer {
 
 public class Main {
     public static void main(String[] args) {
-        // 여기에 코드를 작성해주세요.
         Scanner input = new Scanner(System.in);
 
         int N = input.nextInt(); // N명의 개발자
@@ -46,6 +45,7 @@ public class Main {
             int devY = input.nextInt() - 1; // y 개발자 (0-based index)
             handshakes.add(new int[] {t, devX, devY}); 
         }
+        
         // 시간순으로 악수 정보 정렬
         handshakes.sort(Comparator.comparingInt(a -> a[0]));
 
@@ -61,10 +61,11 @@ public class Main {
                 }
                 developers[devX].infectionCount--; // devX의 감염 가능 횟수 감소
             }
+
             // devY가 감염되었고 전염 가능 횟수가 남아있는 경우
             if (developers[devY].infected && developers[devY].infectionCount > 0) {
                 if (!developers[devX].infected) {
-                    developers[devY].infection(); // devX 감염
+                    developers[devX].infection(); // devX 감염
                 }
                 developers[devY].infectionCount--; // devY의 감염 가능 횟수 감소
             }
@@ -74,6 +75,5 @@ public class Main {
         for (int i = 0; i < N; i++) {
             System.out.print(developers[i].infected ? 1 : 0);
         }
-    
     }
 }
