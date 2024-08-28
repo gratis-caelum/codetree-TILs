@@ -15,7 +15,7 @@ result = -1;
 # p = 탐색구간의 길이 즉, 사진의 크기
 for p in range(len(arr)):
     # i = 탐색 구간의 시작 위치
-    for i in range(len(arr)-p-1):
+    for i in range(len(arr)-p):
         cntG, cntH = 0,0
         pic_length = 0
 
