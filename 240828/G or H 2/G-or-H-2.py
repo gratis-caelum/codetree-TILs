@@ -10,7 +10,7 @@ for _ in range(n):
     pos = int(pos) - 1
     arr[pos] = alpha
 
-result = 0
+result = -1;
 
 # p = 탐색구간의 길이 즉, 사진의 크기
 for p in range(len(arr)):
@@ -33,7 +33,7 @@ for p in range(len(arr)):
                 cntH += 1
             
         # 오로지 G로만 혹은 H로만 이루어져 있거나, G와 H가 정확히 같은 개수만큼 나오게 사진을 찍고싶을 때,
-        if cntG == cntH or cntG == 0 or cntH == 0:
+        if cntG == cntH or (cntG == 0 or cntH == 0):
             # 배열의 길이 저장
             pic_length = p
         
