@@ -10,7 +10,7 @@ for _ in range(n):
     pos = int(pos) - 1
     arr[pos] = alpha
 
-result = -1
+result = 0
 
 # p = 탐색구간의 길이 즉, 사진의 크기
 for p in range(len(arr)):
